@@ -1,0 +1,81 @@
+A4LIB.BIN
+---------
+
+Overview: a 68000 library which contains six "helper" subroutines.  These
+          include procedures for console I/O, file I/O and program
+          termination.
+
+Note: 1) in the following doc, the notation D0.L means "register D0 as a
+      longword".  D0.B means "the low byte of register D0".
+
+	  2) THERE IS NO EOF INDICATOR IN ASSEMBLY LANGUAGE - CAREFULLY READ
+	     THE FileOpen DOCUMENTATION!!!
+		 
+SUBROUTINE: FileOpen
+
+	PURPOSE: Opens the file "D:\TEXT.TXT" for reading, and determines
+	         its size in bytes.
+
+	INPUT: n/a
+
+	OUTPUT: D0.L - 0 on success, negative otherwise
+	        D1.L - length of file in bytes (valid only if D0.L = 0)
+
+	NOTE: This routine looks specifically for TEXT.TXT on the virtual
+	      Atari ST D:\ hard drive, i.e. inside C:\D in the lab settings
+		  for STeem.
+
+SUBROUTINE: FileReset
+
+	PURPOSE: Resets the internal file pointer in the file opened by FileOpen to the start of the
+			 file.  Must only be called if FileOpen returned successfully.
+
+	INPUT: n/a
+
+	OUTPUT: n/a
+
+SUBROUTINE: FileClose
+
+	PURPOSE: Closes the file opened by FileOpen.  Must only be called
+	         if FileOpen returned successfully.
+
+	INPUT: n/a
+
+	OUTPUT: n/a
+
+SUBROUTINE: FileCharRead
+
+	PURPOSE: Reads the next sequential byte from the file opened by
+	         FileOpen.  Must only be called if FileOpen returned
+	         successfully and unread characters still exist.
+
+	INPUT: n/a
+
+	OUTPUT: D0.L - the ASCII value of the byte read (undefined if file
+	               not open or past EOF) in the low byte, all
+	               other bytes clear
+
+SUBROUTINE: Exit
+
+	PURPOSE: Terminates the program.  This subroutine never returns.
+
+	INPUT: n/a
+
+	OUTPUT: n/a
+
+SUBROUTINE: KbdCharRead
+
+	PURPOSE: Waits for and reads a single character from the keyboard.
+
+	INPUT: n/a
+
+	OUTPUT: D0.L - The ASCII value of the character read in the low
+	               byte, all other bytes clear
+
+SUBROUTINE: ScrnCharWrite
+
+	PURPOSE: Writes a single character to the screen.
+
+	INPUT: D0.B - The ASCII value of the character to write.
+
+	OUTPUT: n/a
